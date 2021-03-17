@@ -1,0 +1,13 @@
+name = "GLMdiagnostics"
+uuid = "9f56d73d-908e-489b-9bfa-5ea0950fda24"
+authors = ["Guy F. Sutton"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
