@@ -7,7 +7,103 @@ using GLM
 using Gadfly
 using Statistics
 using Compose
-import GLMdiagnostics
+using GLMdiagnostics
+
+##################
+# - TEST POISSON GLM
+##################
+
+# Set reproducible seed
+Random.seed!(123)
+
+# Simulate n = 100 data points from a Poisson distribution (lambda = 7)
+y = rand(Poisson(7), 100)
+
+# Assign grouping variables (5 groups of 20)
+x = repeat([1, 2, 3, 4, 5],
+            inner = 20,
+            outer = 1)
+
+df = DataFrame(; y, x)
+
+# Run model
+modPoisson = fit(GeneralizedLinearModel,
+                    @formula(y ~ 1 + x),
+                    df,
+                    Poisson(),
+                    GLM.LogLink())
+
+# Plot diagnostics 
+GLMdiagnostics.calc_dev_resids(model = modPoisson, df = df)
+GLMdiagnostics.plot_fit_res(model = modPoisson, df = df)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Set reproducible seed
+Random.seed!(123)
+
+# Simulate data from a Normal distribution
+d = Normal(1, 2)
+y = rand(d, 100)
+
+# Assign grouping variables (5 groups of 20)
+x = repeat([1, 2, 3, 4, 5],
+            inner = 20,
+            outer = 1)
+
+df = hcat(y, x)
+df = DataFrame(df)
+colnames = ["y","x"]
+rename!(df, Symbol.(colnames))
+
+# Run model
+modAov = fit(LinearModel,
+                @formula(y ~ 1 + x),
+                df)
+
+                
+# Plot diagnostics
+plot_fit_res(model = modAov, df = df)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Define function to calculate deviance residuals 
 function calcDevResids(;model, df)
@@ -93,62 +189,3 @@ function plot_fit_res(;model, df)
                 Gadfly.Guide.ylabel("Residuals"),
                 Gadfly.Guide.title("Residuals vs Fitted"))
 end
-
-##################
-# - TEST POISSON GLM
-##################
-
-# Set reproducible seed
-Random.seed!(123)
-
-# Simulate n = 100 data points from a Poisson distribution (lambda = 7)
-y = rand(Poisson(7), 100)
-
-# Assign grouping variables (5 groups of 20)
-x = repeat([1, 2, 3, 4, 5],
-            inner = 20,
-            outer = 1)
-
-df = DataFrame(; y, x)
-
-# Run model
-modPoisson = fit(GeneralizedLinearModel,
-                    @formula(y ~ 1 + x),
-                    df,
-                    Poisson(),
-                    GLM.LogLink())
-
-# Plot diagnostics 
-GLMdiagnostics.calcDevResids(model = modPoisson, df = df)
-plot_fit_res(model = modPoisson, df = df)
-
-# Set reproducible seed
-Random.seed!(123)
-
-# Simulate data from a Normal distribution
-d = Normal(1, 2)
-y = rand(d, 100)
-
-# Assign grouping variables (5 groups of 20)
-x = repeat([1, 2, 3, 4, 5],
-            inner = 20,
-            outer = 1)
-
-df = hcat(y, x)
-df = DataFrame(df)
-colnames = ["y","x"]
-rename!(df, Symbol.(colnames))
-
-# Run model
-modAov = fit(LinearModel,
-                @formula(y ~ 1 + x),
-                df)
-
-                
-# Plot diagnostics
-plot_fit_res(model = modAov, df = df)
-
-
-
-
-

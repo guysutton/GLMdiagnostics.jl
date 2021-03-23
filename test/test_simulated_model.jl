@@ -10,7 +10,7 @@ using Statistics
 using Compose
 
 ###########################################
-# - Create simulated data to test functions
+# - Create simulated data to test functions (ANOVA)
 ###########################################
 
 # Set reproducible seed
@@ -25,11 +25,8 @@ x = repeat([1, 2, 3, 4, 5],
             inner = 20,
             outer = 1)
 
-df = hcat(y, x)
-#df = convert(DataFrame, df)
-df = DataFrame(df)
-colnames = ["y","x"]
-rename!(df, Symbol.(colnames))
+# Create dataframe of response and predictor variables 
+DataFrame(; y, x)
 
 ##########################################
 # - Run linear model (one-way ANOVA)
@@ -37,6 +34,3 @@ rename!(df, Symbol.(colnames))
 
 # Run model
 modAov = lm(@formula(y ~ 1 + x), df)
-
-# Make qqplot for ANOVA model
-anova_qqplot = plot_qq(modAov)

@@ -27,4 +27,8 @@ export plot_scale_loc
 include("plot_diagnostics.jl")
 export plot_diagnostics
 
+# Function #5: Calculate deviance residuals for fitted GLM object
+include("calc_dev_resids.jl")
+export calc_dev_resids
+
 end
