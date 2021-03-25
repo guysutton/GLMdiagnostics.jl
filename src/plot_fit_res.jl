@@ -1,16 +1,15 @@
 # Write function to automate plotting fitted versus residuals plot
 # - Plots standard fitted versus residuals plot for assessing linear model fits
 
-function plot_fit_res(;model, df)
+function plot_fit_res(;model, df, resp_var)
 
         # Extract fitted/predicted values from model object
         pred = GLM.predict(model)
 
-        # Extract vector containing response variable 
-        response = df.y
-
         # Calculate deviance residuals 
-        devResids = GLMdiagnostics.calc_dev_resids(model = model, df = df)
+        devResids = GLMdiagnostics.calc_dev_resids(model = model, 
+                                                   df = df, 
+                                                   resp_var = resp_var)
     
         # Create plot
         p = Gadfly.plot(
@@ -23,6 +22,7 @@ function plot_fit_res(;model, df)
                                  Gadfly.Geom.hline),
                     # Change plot aesthetics
                     Gadfly.Guide.xlabel("Fitted values", orientation=:horizontal),
-                    Gadfly.Guide.ylabel("Residuals"),
+                    Gadfly.Guide.ylabel("Deviance residuals"),
                     Gadfly.Guide.title("Residuals vs Fitted"))
 end
+

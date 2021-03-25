@@ -21,6 +21,8 @@ include("test_simulated_model.jl")
 
     # Test #1
     # - Test that object created by function is of type 'Plot'
-    @test   typeof(plot_fit_res(modAov)) == Plot
+    @test   typeof(plot_fit_res(model = modPoisson,
+                                df = df,
+                                resp_var = "y")) == Plot
 
 end # End of testing for plot_fit_res function

@@ -11,10 +11,10 @@ using SafeTestsets
 #   environments and test sets.
 
 # (1) Test 'plot_qq' function
-@safetestset "test plot_qq" begin include("test_plot_qq.jl") end
+# @safetestset "test plot_qq" begin include("test_plot_qq.jl") end
 
 # (2) Test 'plot_fit_res' function
 @safetestset "test plot_fit_res" begin include("test_plot_fit_res.jl") end
 
 # (3) Test 'plot_scale_loc' function
-@safetestset "test plot_scale_loc" begin include("test_plot_scale_loc.jl") end
+#@safetestset "test plot_scale_loc" begin include("test_plot_scale_loc.jl") end

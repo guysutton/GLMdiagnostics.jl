@@ -10,15 +10,14 @@ using Statistics
 using Compose
 
 ###########################################
-# - Create simulated data to test functions (ANOVA)
+# - Create simulated data to test functions
 ###########################################
 
 # Set reproducible seed
 Random.seed!(123)
 
-# Simulate data from a Normal distribution
-d = Normal(1, 2)
-y = rand(d, 100)
+# Simulate n = 100 data points from a Poisson distribution (lambda = 7)
+y = rand(Poisson(7), 100)
 
 # Assign grouping variables (5 groups of 20)
 x = repeat([1, 2, 3, 4, 5],
@@ -26,11 +25,15 @@ x = repeat([1, 2, 3, 4, 5],
             outer = 1)
 
 # Create dataframe of response and predictor variables 
-DataFrame(; y, x)
+df = DataFrame(; y, x)
 
 ##########################################
-# - Run linear model (one-way ANOVA)
+# - Run Poisson GLM 
 ##########################################
 
-# Run model
-modAov = lm(@formula(y ~ 1 + x), df)
+# Run Poisson GLM
+modPoisson = fit(GeneralizedLinearModel,
+                    @formula(y ~ 1 + x),
+                    df,
+                    Poisson(),
+                    GLM.LogLink())

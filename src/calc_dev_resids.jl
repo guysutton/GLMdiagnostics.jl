@@ -1,7 +1,17 @@
-# Write function to calculate deviance residuals from a fitted GLM object
+"""
+    calc_dev_resids(;model, df, resp_var)
 
-# Define function to calculate deviance residuals 
-function calc_dev_resids(;model, df)
+Return deviance residuals (unstandardised) from a fitted linear model.
+
+...
+# Arguments
+- `model`: Variable containing a fitted linear model (e.g. general linear model [GLM]).
+- `df::DataFrame=df`: Dataframe array containing response and predictor variable(s)/covariates.
+- `resp_var`: String of column from `df` containing the response variable. 
+...
+
+"""
+function calc_dev_resids(;model, df, resp_var)
     
     ###################################################
     # Section #1: Extract response vector and model residuals 
@@ -11,7 +21,7 @@ function calc_dev_resids(;model, df)
     pred = GLM.predict(model)
 
     # Extract vector containing response variable 
-    response_y = df.y
+    response_y = df[!, resp_var]
 
     ###################################################
     # Section #2: Calculate deviance residuals

@@ -34,11 +34,12 @@ modPoisson = fit(GeneralizedLinearModel,
                     GLM.LogLink())
 
 # Plot diagnostics 
-GLMdiagnostics.calc_dev_resids(model = modPoisson, df = df)
-GLMdiagnostics.plot_fit_res(model = modPoisson, df = df)
+GLMdiagnostics.calc_dev_resids(model = modPoisson, df = df, resp_var = "y")
+GLMdiagnostics.plot_fit_res(model = modPoisson, df = df, resp_var = y)
+GLMdiagnostics.plot_scale_loc(model = modPoisson)
 
 
-
+plot_fit_res(model = modPoisson, df = df)
 
 
 
