@@ -35,13 +35,31 @@ modPoisson = fit(GeneralizedLinearModel,
 
 # Plot diagnostics 
 GLMdiagnostics.calc_dev_resids(model = modPoisson, df = df, resp_var = "y")
-GLMdiagnostics.plot_fit_res(model = modPoisson, df = df, resp_var = y)
-GLMdiagnostics.plot_scale_loc(model = modPoisson)
+GLMdiagnostics.plot_fit_res(model = modPoisson, df = df, resp_var = "y")
+GLMdiagnostics.plot_qq(model = modPoisson, df = df, resp_var = "y")
+GLMdiagnostics.plot_scale_loc(model = modPoisson, df = df, resp_var = "y")
 
 
-plot_fit_res(model = modPoisson, df = df)
+devResids = GLMdiagnostics.calc_dev_resids(model = modPoisson,  df = df, resp_var = "y")
+n = Base.length.(devResids)
+n = Array(1:100)
+qx = Distributions.quantile.(Distributions.Normal(), 
+                             Base.range(0.5, 
+                             stop = (n .- 0.5), length = (n)) ./ (n .+ 1))
 
 
+
+
+
+
+
+
+
+ # Extract fitted/predicted values from model object
+ pred = GLM.predict(modPoisson)
+
+ # Extract vector containing response variable 
+ response_y = df[!, :y]
 
 
 
